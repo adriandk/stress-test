@@ -22,8 +22,7 @@
           <div class="d-flex flex-wrap gap-2">
 
             {{-- Mulai Asesmen --}}
-            <a href="#"
-               class="btn btn-outline-primary">
+            <a href="{{ route('assessment.start') }}" class="btn btn-primary">
               Mulai Asesmen
             </a>
 

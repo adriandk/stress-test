@@ -6,6 +6,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccountManagementController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\EmergencyContactController;
+use App\Http\Controllers\AssessmentCategoryController;
+use App\Http\Controllers\AssessmentQuestionController;
+use App\Http\Controllers\AssessmentAnswerOptionController;
+use App\Http\Controllers\AssessmentRiskRuleController;
+use App\Http\Controllers\AssessmentSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,3 +144,138 @@ Route::middleware(['auth', 'konselor'])->post(
     '/manage/articles/{article}/verify',
     [ArticleController::class, 'verify']
 )->name('articles.verify');
+
+/**
+ * EMERGENCY CONTACT
+ *
+ * - Publik (mahasiswa anonim): /emergency-contacts
+ * - Internal (staff & konselor): /manage/emergency-contacts/...
+ */
+
+// PUBLIC: mahasiswa & semua orang bisa lihat daftar, klik WA
+Route::get('/emergency-contacts', [EmergencyContactController::class, 'publicIndex'])
+    ->name('emergency-contacts.public');
+
+// INTERNAL: CRUD untuk Staff BK & Konselor (auth)
+Route::middleware('auth')->group(function () {
+    Route::get('/manage/emergency-contacts', [EmergencyContactController::class, 'index'])
+        ->name('emergency-contacts.index');
+
+    Route::get('/manage/emergency-contacts/create', [EmergencyContactController::class, 'create'])
+        ->name('emergency-contacts.create');
+
+    Route::post('/manage/emergency-contacts', [EmergencyContactController::class, 'store'])
+        ->name('emergency-contacts.store');
+
+    Route::get('/manage/emergency-contacts/{emergency_contact}/edit', [EmergencyContactController::class, 'edit'])
+        ->name('emergency-contacts.edit');
+
+    Route::put('/manage/emergency-contacts/{emergency_contact}', [EmergencyContactController::class, 'update'])
+        ->name('emergency-contacts.update');
+
+    Route::delete('/manage/emergency-contacts/{emergency_contact}', [EmergencyContactController::class, 'destroy'])
+        ->name('emergency-contacts.destroy');
+});
+
+// READ kategori asesmen: staff BK & konselor
+Route::middleware('auth')->group(function () {
+    Route::get('/assessment/categories', [AssessmentCategoryController::class, 'index'])
+        ->name('assessment-categories.index');
+});
+
+// CRUD kategori asesmen: hanya konselor
+Route::middleware(['auth', 'konselor'])->group(function () {
+    Route::get('/assessment/categories/create', [AssessmentCategoryController::class, 'create'])
+        ->name('assessment-categories.create');
+
+    Route::post('/assessment/categories', [AssessmentCategoryController::class, 'store'])
+        ->name('assessment-categories.store');
+
+    Route::get('/assessment/categories/{assessment_category}/edit', [AssessmentCategoryController::class, 'edit'])
+        ->name('assessment-categories.edit');
+
+    Route::put('/assessment/categories/{assessment_category}', [AssessmentCategoryController::class, 'update'])
+        ->name('assessment-categories.update');
+
+    Route::delete('/assessment/categories/{assessment_category}', [AssessmentCategoryController::class, 'destroy'])
+        ->name('assessment-categories.destroy');
+});
+
+// BANK PERTANYAAN & OPSI JAWABAN (Staff BK + Konselor)
+Route::middleware('auth')->group(function () {
+
+    // Pertanyaan
+    Route::get('/assessment/questions', [AssessmentQuestionController::class, 'index'])
+        ->name('assessment-questions.index');
+
+    Route::get('/assessment/questions/create', [AssessmentQuestionController::class, 'create'])
+        ->name('assessment-questions.create');
+
+    Route::post('/assessment/questions', [AssessmentQuestionController::class, 'store'])
+        ->name('assessment-questions.store');
+
+    Route::get('/assessment/questions/{assessment_question}/edit', [AssessmentQuestionController::class, 'edit'])
+        ->name('assessment-questions.edit');
+
+    Route::put('/assessment/questions/{assessment_question}', [AssessmentQuestionController::class, 'update'])
+        ->name('assessment-questions.update');
+
+    Route::delete('/assessment/questions/{assessment_question}', [AssessmentQuestionController::class, 'destroy'])
+        ->name('assessment-questions.destroy');
+
+    // Opsi jawaban (nested per-pertanyaan)
+    Route::get('/assessment/questions/{question}/options', [AssessmentAnswerOptionController::class, 'index'])
+        ->name('assessment-options.index');
+
+    Route::get('/assessment/questions/{question}/options/create', [AssessmentAnswerOptionController::class, 'create'])
+        ->name('assessment-options.create');
+
+    Route::post('/assessment/questions/{question}/options', [AssessmentAnswerOptionController::class, 'store'])
+        ->name('assessment-options.store');
+
+    Route::get('/assessment/questions/{question}/options/{option}/edit', [AssessmentAnswerOptionController::class, 'edit'])
+        ->name('assessment-options.edit');
+
+    Route::put('/assessment/questions/{question}/options/{option}', [AssessmentAnswerOptionController::class, 'update'])
+        ->name('assessment-options.update');
+
+    Route::delete('/assessment/questions/{question}/options/{option}', [AssessmentAnswerOptionController::class, 'destroy'])
+        ->name('assessment-options.destroy');
+});
+
+// INDEX: bisa diakses semua yang login (staff_bk & konselor)
+Route::middleware('auth')->group(function () {
+    Route::get('/assessment/risk-rules', [AssessmentRiskRuleController::class, 'index'])
+        ->name('assessment-risk-rules.index');
+});
+
+// CRUD: hanya konselor
+Route::middleware(['auth', 'konselor'])->group(function () {
+    Route::get('/assessment/risk-rules/create', [AssessmentRiskRuleController::class, 'create'])
+        ->name('assessment-risk-rules.create');
+
+    Route::post('/assessment/risk-rules', [AssessmentRiskRuleController::class, 'store'])
+        ->name('assessment-risk-rules.store');
+
+    Route::get('/assessment/risk-rules/{assessment_risk_rule}/edit', [AssessmentRiskRuleController::class, 'edit'])
+        ->name('assessment-risk-rules.edit');
+
+    Route::put('/assessment/risk-rules/{assessment_risk_rule}', [AssessmentRiskRuleController::class, 'update'])
+        ->name('assessment-risk-rules.update');
+
+    Route::delete('/assessment/risk-rules/{assessment_risk_rule}', [AssessmentRiskRuleController::class, 'destroy'])
+        ->name('assessment-risk-rules.destroy');
+});
+
+// Flow asesmen publik (mahasiswa anonim)
+Route::get('/assessment/start', [AssessmentSessionController::class, 'start'])
+    ->name('assessment.start');
+
+Route::get('/assessment/{session}', [AssessmentSessionController::class, 'showForm'])
+    ->name('assessment.form');
+
+Route::post('/assessment/{session}', [AssessmentSessionController::class, 'submit'])
+    ->name('assessment.submit');
+
+Route::get('/assessment/{session}/result', [AssessmentSessionController::class, 'result'])
+    ->name('assessment.result');

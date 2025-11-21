@@ -74,28 +74,34 @@
                         <div class="fw-semibold text-uppercase small text-secondary mb-2">Umum</div>
 
                         <a href="{{ route('landing.mahasiswa') }}"
-                        class="btn btn-sm w-100 text-start mb-2
-                                {{ request()->routeIs('landing.mahasiswa') ? 'btn-primary' : 'btn-outline-light' }}">
+                           class="btn btn-sm w-100 text-start mb-2
+                                  {{ request()->routeIs('landing.mahasiswa') ? 'btn-primary' : 'btn-outline-light' }}">
                             <i class="bi bi-house-door me-2"></i> Beranda Mahasiswa
                         </a>
 
                         <a href="{{ route('articles.public') }}"
-                        class="btn btn-sm w-100 text-start
-                                {{ request()->routeIs('articles.public') || request()->routeIs('articles.show') ? 'btn-primary' : 'btn-outline-light' }}">
+                           class="btn btn-sm w-100 text-start mb-2
+                                  {{ request()->routeIs('articles.public') || request()->routeIs('articles.show') ? 'btn-primary' : 'btn-outline-light' }}">
                             <i class="bi bi-journal-text me-2"></i> Artikel Edukatif
+                        </a>
+
+                        <a href="{{ route('emergency-contacts.public') }}"
+                           class="btn btn-sm w-100 text-start
+                                  {{ request()->routeIs('emergency-contacts.public') ? 'btn-primary' : 'btn-outline-light' }}">
+                            <i class="bi bi-telephone-outbound me-2"></i> Kontak Darurat
                         </a>
                     </div>
                 </div>
 
-            @elseif($role === 'staff_bk')
+           @elseif($role === 'staff_bk')
                 <div class="card bg-dark text-light border-0 shadow-sm w-100 h-100">
                     <div class="card-body p-3 d-flex flex-column">
                         <div>
                             <div class="fw-semibold text-uppercase small text-secondary mb-2">Staff BK</div>
 
                             <a href="{{ route('dashboard.staff') }}"
-                            class="btn btn-sm w-100 text-start mb-2
-                                    {{ request()->routeIs('dashboard.staff') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('dashboard.staff') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
                             </a>
 
@@ -104,21 +110,59 @@
                             <div class="fw-semibold text-uppercase small text-secondary mb-2">Konten</div>
 
                             <a href="{{ route('article-categories.index') }}"
-                            class="btn btn-sm w-100 text-start mb-2
-                                    {{ request()->routeIs('article-categories.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('article-categories.*') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-tags me-2"></i> Kategori Artikel
                             </a>
 
                             <a href="{{ route('articles.index') }}"
-                            class="btn btn-sm w-100 text-start mb-2
-                                    {{ request()->routeIs('articles.index') || request()->routeIs('articles.create') || request()->routeIs('articles.edit') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('articles.index') || request()->routeIs('articles.create') || request()->routeIs('articles.edit') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-pencil-square me-2"></i> Kelola Artikel
                             </a>
 
                             <a href="{{ route('articles.public') }}"
-                            class="btn btn-sm w-100 text-start
-                                    {{ request()->routeIs('articles.public') || request()->routeIs('articles.show') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('articles.public') || request()->routeIs('articles.show') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-journal-text me-2"></i> Artikel (Publik)
+                            </a>
+
+                            <hr class="border-secondary my-3">
+
+                            <div class="fw-semibold text-uppercase small text-secondary mb-2">Asesmen</div>
+
+                            <a href="{{ route('assessment-categories.index') }}"
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('assessment-categories.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-list-ul me-2"></i> Kategori Asesmen
+                            </a>
+
+                            <a href="{{ route('assessment-questions.index') }}"
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('assessment-questions.*') || request()->routeIs('assessment-options.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-question-circle me-2"></i> Bank Pertanyaan
+                            </a>
+                            
+                            <a href="{{ route('assessment-risk-rules.index') }}"
+                                class="btn btn-sm w-100 text-start mb-2
+                                    {{ request()->routeIs('assessment-risk-rules.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-activity me-2"></i> Aturan Risiko
+                            </a>
+
+                            <hr class="border-secondary my-3">
+
+                            <div class="fw-semibold text-uppercase small text-secondary mb-2">Layanan</div>
+
+                            <a href="{{ route('emergency-contacts.index') }}"
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('emergency-contacts.index') || request()->routeIs('emergency-contacts.create') || request()->routeIs('emergency-contacts.edit') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-telephone me-2"></i> Kelola Kontak Darurat
+                            </a>
+
+                            <a href="{{ route('emergency-contacts.public') }}"
+                               class="btn btn-sm w-100 text-start
+                                      {{ request()->routeIs('emergency-contacts.public') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-telephone-outbound me-2"></i> Kontak Darurat (Publik)
                             </a>
                         </div>
                     </div>
@@ -131,8 +175,8 @@
                             <div class="fw-semibold text-uppercase small text-secondary mb-2">Konselor</div>
 
                             <a href="{{ route('dashboard.konselor') }}"
-                            class="btn btn-sm w-100 text-start mb-2
-                                    {{ request()->routeIs('dashboard.konselor') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('dashboard.konselor') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
                             </a>
 
@@ -141,21 +185,59 @@
                             <div class="fw-semibold text-uppercase small text-secondary mb-2">Konten</div>
 
                             <a href="{{ route('article-categories.index') }}"
-                            class="btn btn-sm w-100 text-start mb-2
-                                    {{ request()->routeIs('article-categories.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('article-categories.*') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-tags me-2"></i> Kategori Artikel
                             </a>
 
                             <a href="{{ route('articles.index') }}"
-                            class="btn btn-sm w-100 text-start mb-2
-                                    {{ request()->routeIs('articles.index') || request()->routeIs('articles.create') || request()->routeIs('articles.edit') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('articles.index') || request()->routeIs('articles.create') || request()->routeIs('articles.edit') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-pencil-square me-2"></i> Kelola Artikel
                             </a>
 
                             <a href="{{ route('articles.public') }}"
-                            class="btn btn-sm w-100 text-start
-                                    {{ request()->routeIs('articles.public') || request()->routeIs('articles.show') ? 'btn-primary' : 'btn-outline-light' }}">
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('articles.public') || request()->routeIs('articles.show') ? 'btn-primary' : 'btn-outline-light' }}">
                                 <i class="bi bi-journal-text me-2"></i> Artikel (Publik)
+                            </a>
+
+                            <hr class="border-secondary my-3">
+
+                            <div class="fw-semibold text-uppercase small text-secondary mb-2">Asesmen</div>
+
+                            <a href="{{ route('assessment-categories.index') }}"
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('assessment-categories.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-list-ul me-2"></i> Kategori Asesmen
+                            </a>
+
+                            <a href="{{ route('assessment-questions.index') }}"
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('assessment-questions.*') || request()->routeIs('assessment-options.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-question-circle me-2"></i> Bank Pertanyaan
+                            </a>
+                            
+                            <a href="{{ route('assessment-risk-rules.index') }}"
+                                class="btn btn-sm w-100 text-start mb-2
+                                    {{ request()->routeIs('assessment-risk-rules.*') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-activity me-2"></i> Aturan Risiko
+                            </a>
+
+                            <hr class="border-secondary my-3">
+
+                            <div class="fw-semibold text-uppercase small text-secondary mb-2">Layanan</div>
+
+                            <a href="{{ route('emergency-contacts.index') }}"
+                               class="btn btn-sm w-100 text-start mb-2
+                                      {{ request()->routeIs('emergency-contacts.index') || request()->routeIs('emergency-contacts.create') || request()->routeIs('emergency-contacts.edit') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-telephone me-2"></i> Kelola Kontak Darurat
+                            </a>
+
+                            <a href="{{ route('emergency-contacts.public') }}"
+                               class="btn btn-sm w-100 text-start
+                                      {{ request()->routeIs('emergency-contacts.public') ? 'btn-primary' : 'btn-outline-light' }}">
+                                <i class="bi bi-telephone-outbound me-2"></i> Kontak Darurat (Publik)
                             </a>
                         </div>
                     </div>
